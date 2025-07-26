@@ -5,196 +5,375 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dr. Deena Wilson - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <!-- Swiper.js for Carousel -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Typed.js for typing animation -->
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background-color: #111827; /* Dark Blue-Gray */
+            color: #E5E7EB; /* Light Gray */
+            overflow: hidden; /* Prevent body scroll */
         }
+        .text-cyan { color: #22d3ee; }
+        .bg-gray-800 { background-color: #1F2937; }
+        .bg-gray-900 { background-color: #111827; }
+
+        /* Sphere navigation styles */
+        .nav-sphere {
+            width: 50px;
+            height: 50px;
+            background-color: #374151; /* Gray-600 */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-sphere:hover, .nav-sphere.active {
+            background-color: #22d3ee;
+            box-shadow: 0 0 15px #22d3ee, 0 0 25px #22d3ee;
+            transform: scale(1.1);
+        }
+        .nav-sphere:hover i, .nav-sphere.active i {
+            color: #111827;
+        }
+        .nav-tooltip {
+            visibility: hidden; opacity: 0; position: absolute; left: 120%; top: 50%;
+            transform: translateY(-50%); background-color: #22d3ee; color: #111827;
+            padding: 5px 10px; border-radius: 5px; font-weight: 600; white-space: nowrap;
+            transition: opacity 0.3s ease;
+        }
+        .nav-sphere:hover .nav-tooltip { visibility: visible; opacity: 1; }
+        
+        /* Image upload style */
+        .image-upload-wrapper { position: relative; width: 180px; height: 180px; }
+        .image-upload-icon {
+            position: absolute; bottom: 5px; right: 5px; background-color: #22d3ee;
+            color: #111827; border-radius: 50%; padding: 8px; cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .image-upload-icon:hover { transform: scale(1.2); }
+
+        /* Swiper and Card Styles */
+        .swiper { width: 100%; height: 100%; }
+        .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            background: #111827; /* Match body background */
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+        .swiper-slide:not(.swiper-slide-active) {
+            visibility: hidden;
+            opacity: 0;
+        }
+        .slide-content-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        .glass-card {
+            background: rgba(31, 41, 55, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Flip Card Styles */
+        .flip-card { perspective: 1000px; }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        .flip-card-back { transform: rotateY(180deg); }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body class="flex">
 
-    <!-- Header -->
-    <header class="bg-white shadow-md">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">Dr. Deena Wilson</h1>
-                    <p class="text-lg text-gray-600">Horticulture & Post-Harvest Technology Specialist</p>
-                </div>
-                <div class="text-right">
-                    <p class="text-gray-600">deena.amrinder@gmail.com</p>
-                    <p class="text-gray-600">+1 403-926-1296</p>
-                    <p class="text-gray-600">Calgary, AB T3N OT4</p>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation -->
-    <nav class="bg-gray-800 text-white sticky top-0 z-10">
-        <div class="container mx-auto px-6 py-3">
-            <ul class="flex justify-center space-x-6">
-                <li><a href="#summary" class="hover:text-gray-300">About</a></li>
-                <li><a href="#skills" class="hover:text-gray-300">Skills</a></li>
-                <li><a href="#experience" class="hover:text-gray-300">Experience</a></li>
-                <li><a href="#education" class="hover:text-gray-300">Education</a></li>
-                <li><a href="#research" class="hover:text-gray-300">Research</a></li>
-                <li><a href="#accomplishments" class="hover:text-gray-300">Accomplishments</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- Left Side Navigation -->
+    <aside class="w-24 min-h-screen bg-gray-900 p-4 flex flex-col items-center justify-center space-y-6 fixed left-0 top-0 z-20">
+        <div class="nav-sphere active" data-slide="0"><i data-feather="home" class="text-gray-300"></i><span class="nav-tooltip">Home</span></div>
+        <div class="nav-sphere" data-slide="1"><i data-feather="briefcase" class="text-gray-300"></i><span class="nav-tooltip">Experience</span></div>
+        <div class="nav-sphere" data-slide="2"><i data-feather="star" class="text-gray-300"></i><span class="nav-tooltip">Skills</span></div>
+        <div class="nav-sphere" data-slide="3"><i data-feather="book" class="text-gray-300"></i><span class="nav-tooltip">Education</span></div>
+        <div class="nav-sphere" data-slide="4"><i data-feather="book-open" class="text-gray-300"></i><span class="nav-tooltip">Research</span></div>
+        <div class="nav-sphere" data-slide="5"><i data-feather="award" class="text-gray-300"></i><span class="nav-tooltip">Accomplishments</span></div>
+        <div class="nav-sphere" data-slide="6"><i data-feather="file-text" class="text-gray-300"></i><span class="nav-tooltip">Resume</span></div>
+    </aside>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-6 py-8">
+    <main class="ml-24 w-full h-screen p-4 md:p-8">
+        <!-- Swiper -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                
+                <!-- Slide 1: Home -->
+                <div class="swiper-slide">
+                    <div class="slide-content-wrapper flex items-center justify-center">
+                        <div class="flex flex-col md:flex-row items-center justify-center gap-12 text-center md:text-left">
+                            <div class="image-upload-wrapper">
+                                <img id="profile-picture" src="https://placehold.co/180x180/1F2937/E5E7EB?text=DW" alt="Profile Picture" class="rounded-full border-4 border-cyan-500">
+                                <div class="image-upload-icon" onclick="document.getElementById('image-input').click()"><i data-feather="camera"></i></div>
+                                <input type="file" id="image-input" class="hidden" accept="image/*,application/pdf">
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-light">Hello, I'm</h3>
+                                <h1 class="text-5xl md:text-7xl font-bold mt-2 text-white">Dr. Deena Wilson</h1>
+                                <h2 class="text-2xl md:text-3xl font-semibold mt-4">And I'm a <span id="typed-text" class="text-cyan"></span></h2>
+                                <p class="mt-6 text-lg text-gray-400 max-w-xl">A highly analytical and adaptable professional with a Ph.D. background and proven success in process improvement, team training, and academic research.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Summary Section -->
-        <section id="summary" class="mb-12">
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-gray-300 pb-2">About Me</h2>
-            <p class="text-lg leading-relaxed">
-                I am devoted to learning new things, advancing education, and supporting others in their endeavors. I have a passion for research and a special talent for bridging the gap between academic theory and practical application. As both a talented researcher and an established assistant professor, I am always looking for ways to have a positive impact in my area and beyond, whether it be through research or mentoring students.
-            </p>
-        </section>
+                <!-- Slide 2: Experience -->
+                <div class="swiper-slide">
+                    <div class="slide-content-wrapper">
+                        <div class="w-full max-w-4xl mx-auto">
+                            <h2 class="text-4xl font-bold mb-2 text-center">Professional <span class="text-cyan">Experience</span></h2>
+                            <p class="text-center text-sm text-gray-400 mb-8">Click or tap on a card to see more details.</p>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="flip-card h-64" onclick="this.classList.toggle('flipped')">
+                                    <div class="flip-card-inner">
+                                        <div class="flip-card-front glass-card flex flex-col justify-center items-center text-center p-4">
+                                            <h3 class="text-xl font-bold text-cyan">Warehouse Worker</h3><p class="font-semibold text-white">Amazon Fulfillment</p><p class="text-sm text-gray-400">Nov 2023 – Present</p>
+                                        </div>
+                                        <div class="flip-card-back glass-card p-4 text-sm overflow-y-auto">
+                                            <h4 class="font-bold text-cyan mb-2">Key Roles: Ambassador & Problem Solver</h4><ul class="list-disc list-inside text-gray-300 space-y-2"><li>Provide orientation and foundational training for new team members.</li><li>Use inventory software to investigate and resolve discrepancies.</li><li>Improve overall workflow by fixing technical and logistical issues.</li></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flip-card h-64" onclick="this.classList.toggle('flipped')">
+                                    <div class="flip-card-inner">
+                                        <div class="flip-card-front glass-card flex flex-col justify-center items-center text-center p-4">
+                                            <h3 class="text-xl font-bold text-cyan">Assistant Professor</h3><p class="font-semibold text-white">Sam Higginbottom University</p><p class="text-sm text-gray-400">Oct 2018 – Mar 2021</p>
+                                        </div>
+                                        <div class="flip-card-back glass-card p-4 text-sm overflow-y-auto">
+                                            <h4 class="font-bold text-cyan mb-2">Key Achievements:</h4><ul class="list-disc list-inside text-gray-300 space-y-2"><li>Guided 20+ postgraduate students with a 95% on-schedule completion rate.</li><li>Developed innovative course materials, improving student engagement by 15%.</li><li>Published original research in horticultural science.</li></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="flip-card h-64" onclick="this.classList.toggle('flipped')">
+                                    <div class="flip-card-inner">
+                                        <div class="flip-card-front glass-card flex flex-col justify-center items-center text-center p-4">
+                                            <h3 class="text-xl font-bold text-cyan">Assistant Professor</h3><p class="font-semibold text-white">Doon P.G. College</p><p class="text-sm text-gray-400">Apr 2016 – Sep 2018</p>
+                                        </div>
+                                        <div class="flip-card-back glass-card p-4 text-sm overflow-y-auto">
+                                            <h4 class="font-bold text-cyan mb-2">Key Responsibilities:</h4><ul class="list-disc list-inside text-gray-300 space-y-2"><li>Mentored graduate students in thesis research and development.</li><li>Evaluated student progress and provided constructive feedback.</li><li>Collaborated with professors to manage education projects.</li></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="flip-card h-64" onclick="this.classList.toggle('flipped')">
+                                    <div class="flip-card-inner">
+                                        <div class="flip-card-front glass-card flex flex-col justify-center items-center text-center p-4">
+                                            <h3 class="text-xl font-bold text-cyan">Senior Research Fellow</h3><p class="font-semibold text-white">Multiple Institutions</p><p class="text-sm text-gray-400">Oct 2011 – Mar 2012</p>
+                                        </div>
+                                        <div class="flip-card-back glass-card p-4 text-sm overflow-y-auto">
+                                            <h4 class="font-bold text-cyan mb-2">Key Projects:</h4><ul class="list-disc list-inside text-gray-300 space-y-2"><li>Developed outreach technologies for temperate fruit crops.</li><li>Contributed to a project on Integrated Crop Management in Mango.</li><li>Synthesized large amounts of information to support research.</li></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Skills Section -->
-        <section id="skills" class="mb-12">
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-gray-300 pb-2">Skills</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-2">Research</h3>
-                    <p>Conducting and publishing original research, and securing funding to support ongoing research projects.</p>
+                <!-- Slide 3: Skills -->
+                <div class="swiper-slide">
+                    <div class="slide-content-wrapper">
+                        <div class="w-full max-w-5xl mx-auto">
+                            <h2 class="text-4xl font-bold mb-8 text-center">Core <span class="text-cyan">Competencies</span></h2>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                                <div class="flip-card h-40" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front glass-card flex flex-col justify-center items-center text-center"><i data-feather="pen-tool" class="mx-auto w-10 h-10 text-cyan mb-3"></i><h3 class="font-bold text-lg">Research</h3></div><div class="flip-card-back glass-card flex justify-center items-center p-2 text-center text-sm">Conducting and publishing original research and securing funding.</div></div></div>
+                                <div class="flip-card h-40" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front glass-card flex flex-col justify-center items-center text-center"><i data-feather="users" class="mx-auto w-10 h-10 text-cyan mb-3"></i><h3 class="font-bold text-lg">Mentoring</h3></div><div class="flip-card-back glass-card flex justify-center items-center p-2 text-center text-sm">Guiding M.Sc. and Ph.D. students to develop academic and research skills.</div></div></div>
+                                <div class="flip-card h-40" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front glass-card flex flex-col justify-center items-center text-center"><i data-feather="book" class="mx-auto w-10 h-10 text-cyan mb-3"></i><h3 class="font-bold text-lg">Teaching</h3></div><div class="flip-card-back glass-card flex justify-center items-center p-2 text-center text-sm">Developing and delivering high-quality lectures and course materials.</div></div></div>
+                                <div class="flip-card h-40" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front glass-card flex flex-col justify-center items-center text-center"><i data-feather="settings" class="mx-auto w-10 h-10 text-cyan mb-3"></i><h3 class="font-bold text-lg">Problem-Solving</h3></div><div class="flip-card-back glass-card flex justify-center items-center p-2 text-center text-sm">Identifying and solving technical or logistical issues during research projects.</div></div></div>
+                                <div class="flip-card h-40" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front glass-card flex flex-col justify-center items-center text-center"><i data-feather="trending-up" class="mx-auto w-10 h-10 text-cyan mb-3"></i><h3 class="font-bold text-lg">Adaptability</h3></div><div class="flip-card-back glass-card flex justify-center items-center p-2 text-center text-sm">Adapting to changing academic and research requirements.</div></div></div>
+                                <div class="flip-card h-40" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="flip-card-front glass-card flex flex-col justify-center items-center text-center"><i data-feather="message-circle" class="mx-auto w-10 h-10 text-cyan mb-3"></i><h3 class="font-bold text-lg">Communication</h3></div><div class="flip-card-back glass-card flex justify-center items-center p-2 text-center text-sm">Clearly communicating research findings to colleagues and students.</div></div></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-2">Mentoring</h3>
-                    <p>Providing guidance and mentorship to M.Sc. and Ph.D. students, helping them develop their academic and research skills.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-2">Teaching</h3>
-                    <p>Developing and delivering high-quality lectures and course materials that engage and inspire students.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-2">Communication</h3>
-                    <p>Clearly communicating research findings to colleagues and students, and collaborating with other researchers.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-2">Problem-Solving</h3>
-                    <p>Identifying and solving problems that may arise during research projects, and finding solutions to technical or logistical issues.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold mb-2">Critical Thinking</h3>
-                    <p>Analyzing and evaluating complex academic and research materials to draw meaningful conclusions.</p>
-                </div>
-            </div>
-        </section>
 
-        <!-- Experience Section -->
-        <section id="experience" class="mb-12">
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-gray-300 pb-2">Professional Experience</h2>
-            <div class="space-y-8">
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold">Assistant Professor</h3>
-                    <p class="text-gray-600">Sam Higginbottom University of Agri. Tech & Sciences | Prayagraj, Uttar Pradesh</p>
-                    <p class="text-sm text-gray-500">10/2018 - 03/2021</p>
-                    <ul class="list-disc list-inside mt-4 space-y-2">
-                        <li>Provided guidance for student thesis and dissertation work.</li>
-                        <li>Prepared innovative course materials to encourage critical thinking.</li>
-                        <li>Performed research in Horticulture sciences and published papers in national journals.</li>
-                        <li>Supervised dissertational research work to assist the research publication process.</li>
-                    </ul>
+                <!-- Slide 4: Education -->
+                <div class="swiper-slide">
+                    <div class="slide-content-wrapper">
+                        <div class="w-full max-w-4xl mx-auto">
+                            <h2 class="text-4xl font-bold mb-8 text-center">Educational <span class="text-cyan">Qualifications</span></h2>
+                            <div class="space-y-6">
+                                <div class="glass-card"><h3 class="text-xl font-bold text-cyan">Ph.D. in Horticulture & Post Harvest Technology</h3><p class="font-semibold text-white">G.B Pant University of Agri. & Technology | Pant Nagar, India</p><p class="text-sm text-gray-400">Graduated: 09/2016</p></div>
+                                <div class="glass-card"><h3 class="text-xl font-bold text-cyan">Master of Science in Horticulture</h3><p class="font-semibold text-white">G.B Pant University of Agri. & Technology | Pant Nagar, India</p><p class="text-sm text-gray-400">Graduated: 09/2011</p></div>
+                                <div class="glass-card"><h3 class="text-xl font-bold text-cyan">Bachelor of Science</h3><p class="font-semibold text-white">Kumaun University | Nainital, India</p><p class="text-sm text-gray-400">Graduated: 06/2007</p></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold">Assistant Professor</h3>
-                    <p class="text-gray-600">Doon P.G. College of Agri. Science & Tech. | Dehradun, Uttarakhand, India</p>
-                    <p class="text-sm text-gray-500">04/2016 - 09/2018</p>
-                    <ul class="list-disc list-inside mt-4 space-y-2">
-                        <li>Mentored graduate students in thesis research and development.</li>
-                        <li>Evaluated student progress and provided constructive feedback.</li>
-                        <li>Collaborated with professors to manage education projects.</li>
-                        <li>Tutored students requiring additional assistance.</li>
-                    </ul>
+
+                <!-- Slide 5: Research -->
+                <div class="swiper-slide">
+                     <div class="slide-content-wrapper">
+                        <div class="w-full max-w-4xl mx-auto">
+                            <h2 class="text-4xl font-bold mb-8 text-center">Research & <span class="text-cyan">Publications</span></h2>
+                            <div class="space-y-3 text-sm">
+                                <p class="glass-card">Wilson, D., et al. (2013). Evaluation of the suitability of different media for drying of chrysanthemum flowers... <i>Journal of Hill Agriculture, 4</i>(2), 94-97.</p>
+                                <p class="glass-card">Wilson, D., et al. (2013). Evaluation of different methods for drying of Chrysanthemum flowers. <i>Asian Journal of Horticulture, 8</i>(2), 743-745.</p>
+                                <p class="glass-card">Wilson, D., et al. (2016). Effect of coating materials and chemicals on shelf life and quality of mango cv. Langra. <i>Progressive Research- An International Journal, 11</i>(4), 526-529.</p>
+                                <p class="glass-card">Singh, D., Wilson, D., et al. (2019). Value Addition of Aonla (Emblica officinalis) Murabba with Cardamom. <i>Int. J. Curr.Microbiol. App.Sci, 8</i>(12), 433-438.</p>
+                                <p class="glass-card">Maurya, S. M., & Wilson, D. (2020). A Study on Effect of Foliar Application of Micronutrients on Growth, Fruit Set and Yield of Guava Cv. Allahabad Safeda. <i>Int. J. Curr.Microbiol.App. Sci, 9</i>(11), 1234-1240.</p>
+                                <p class="glass-card">Rawat, M., & Wilson, D. (2020). Effect of FYM, NPK, and Biofertilizers on Flowering, Fruit Yield, and Quality of Kinnow. <i>Int. J. Curr. Microbiol. App. Sci, 9</i>(09), 143-148.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold">Senior Research Fellow</h3>
-                    <p class="text-gray-600">Central Institute of Temperate Horticulture | Mukteshwar, Uttarakhand, India</p>
-                    <p class="text-sm text-gray-500">12/2011 - 03/2012</p>
-                    <ul class="list-disc list-inside mt-4 space-y-2">
-                        <li>Worked on outreach technologies for temperate fruit crops.</li>
-                        <li>Synthesized large amounts of information to support research efforts.</li>
-                        <li>Discussed effective research protocols and procedures to minimize errors.</li>
-                    </ul>
+
+                <!-- Slide 6: Accomplishments -->
+                <div class="swiper-slide">
+                    <div class="slide-content-wrapper">
+                        <div class="w-full max-w-4xl mx-auto">
+                            <h2 class="text-4xl font-bold mb-8 text-center">Awards & <span class="text-cyan">Accomplishments</span></h2>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="glass-card flex items-center gap-4"><i data-feather="award" class="w-10 h-10 text-cyan flex-shrink-0"></i><div><h3 class="font-bold text-lg">Maulana Azad National Fellowship</h3><p class="text-gray-400 text-sm">Awarded by University Grant Commission (2012-2015).</p></div></div>
+                                <div class="glass-card flex items-center gap-4"><i data-feather="award" class="w-10 h-10 text-cyan flex-shrink-0"></i><div><h3 class="font-bold text-lg">Young Scientist Award</h3><p class="text-gray-400 text-sm">Awarded at an international conference in Kathmandu, Nepal (2017).</p></div></div>
+                                <div class="glass-card flex items-center gap-4"><i data-feather="award" class="w-10 h-10 text-cyan flex-shrink-0"></i><div><h3 class="font-bold text-lg">Outstanding Ph.D. Thesis Award</h3><p class="text-gray-400 text-sm">Awarded at the National Conference on Livelihood and Food Security (2018).</p></div></div>
+                                <div class="glass-card flex items-center gap-4"><i data-feather="award" class="w-10 h-10 text-cyan flex-shrink-0"></i><div><h3 class="font-bold text-lg">Second Prize in Oral Presentation</h3><p class="text-gray-400 text-sm">Awarded at SHUATS, Allahabad (2018).</p></div></div>
+                                <div class="glass-card flex items-center gap-4"><i data-feather="mic" class="w-10 h-10 text-cyan flex-shrink-0"></i><div><h3 class="font-bold text-lg">Invited Lecture</h3><p class="text-gray-400 text-sm">Delivered a lecture on the Green Skill Development Program at the Botanical Survey of India (2019).</p></div></div>
+                                <div class="glass-card flex items-center gap-4"><i data-feather="users" class="w-10 h-10 text-cyan flex-shrink-0"></i><div><h3 class="font-bold text-lg">Symposium & Seminar Participation</h3><p class="text-gray-400 text-sm">Actively participated and presented at over 5 national seminars and symposiums between 2011 and 2018.</p></div></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                 <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold">Senior Research Fellow</h3>
-                    <p class="text-gray-600">Vivekananda Parvatiya Krishi Anusandhan Sansthan | Almora, Uttarakhand, India</p>
-                    <p class="text-sm text-gray-500">10/2011 - 12/2011</p>
-                    <ul class="list-disc list-inside mt-4 space-y-2">
-                        <li>Contributed to a project on Integrated crop management in Mango.</li>
-                        <li>Maintained confidentiality for all research data and projects.</li>
-                        <li>Monitored project progress through research summaries.</li>
-                    </ul>
+
+                <!-- Slide 7: Resume Viewer -->
+                <div class="swiper-slide">
+                    <div class="slide-content-wrapper">
+                        <div class="w-full h-full max-w-5xl mx-auto flex flex-col">
+                             <h2 class="text-4xl font-bold mb-4 text-center">My <span class="text-cyan">Resume</span></h2>
+                             <div class="flex-grow">
+                                <iframe id="resume-viewer" class="w-full h-full rounded-lg" src=""></iframe>
+                             </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Education Section -->
-        <section id="education" class="mb-12">
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-gray-300 pb-2">Education</h2>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-xl font-semibold">Ph.D. in Horticulture & Post Harvest Technology</h3>
-                <p class="text-gray-600">G.B Pant University of Agri. & Technology | Pant Nagar, Uttarakhand, India</p>
-                <p class="text-sm text-gray-500">Graduated: 09/2016</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-md mt-4">
-                <h3 class="text-xl font-semibold">Master of Science in Horticulture</h3>
-                <p class="text-gray-600">G.B Pant University of Agri. & Technology | Pant Nagar, Uttarakhand, India</p>
-                <p class="text-sm text-gray-500">Graduated: 09/2011</p>
-            </div>
-            <div class="bg-white p-6 rounded-lg shadow-md mt-4">
-                <h3 class="text-xl font-semibold">Bachelor of Science</h3>
-                <p class="text-gray-600">Kumaun University | Nainital, Uttarakhand, India</p>
-                <p class="text-sm text-gray-500">Graduated: 06/2007</p>
-            </div>
-        </section>
-
-        <!-- Research Work Section -->
-        <section id="research" class="mb-12">
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-gray-300 pb-2">Research Work</h2>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <ul class="list-disc list-inside space-y-4">
-                    <li>Deena Wilson, S.k. Sharma, B.L. Attri (2013) Evaluation of the suitability of different media for drying of chrysanthemum wers in the mechanical dehydrator. Journal of hill Agriculture 4 (2): 94-97.</li>
-                    <li>Deena Wilson, B.L. Attri, S.K. Sharma (2013). Evaluation of different methods for drying of Chrysanthemum dlwers. Asian Journal of Horticulture 8 (2): 743-745.</li>
-                    <li>Deena Wilson, A.K. Singh, C.P. Singh (2016). Effect of coating materials and chemicals on shelf life and quality of mango cv. Langra. Progressive Research- An International Journal. 11 (4):526-529.</li>
-                    <li>Dharmendra Singh, Vijay Bahadur, Deena Wilson, Samir. E. Ttopno and Anita Kerketta. 2019. Value Addition of Aonla(Emblica officinalis) Murabba with Cardamom. Int. J. Curr.Microbiol. App.Sci. 8(12): 433-438.</li>
-                    <li>Saurabh Mani Maurya and Deena Wilson 2020. A Study on Effect of Foliar Application of Micronutrients on Growth, Fruit Set and Yield of Guava Cv. Allahabad Safeda. Int. J. Curr.Microbiol.App. Sci. 9 (11): 1234-1240.</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Accomplishments Section -->
-        <section id="accomplishments" class="mb-12">
-            <h2 class="text-2xl font-bold mb-4 border-b-2 border-gray-300 pb-2">Accomplishments</h2>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <ul class="list-disc list-inside space-y-2">
-                    <li>Awarded Maulana Azad National fellowship by University Grant Commission (2012-2015).</li>
-                    <li>Young Scientist Award at an international conference in Kathmandu, Nepal (2017).</li>
-                    <li>Outstanding Ph.D. Thesis Award at the National Conference on Livelihood and Food Security (2018).</li>
-                    <li>Second Prize in Oral Presentation at SHUATS, Allahabad (2018).</li>
-                    <li>Delivered a lecture on the Green Skill Development Program at the Botanical Survey of India (2019).</li>
-                </ul>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-6">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2024 Dr. Deena Wilson. All Rights Reserved.</p>
-            <div class="mt-4">
-                <a href="https://www.linkedin.com/in/dr-deena-wilson-1303261a0" target="_blank" class="text-blue-400 hover:text-blue-300">LinkedIn Profile</a>
             </div>
         </div>
-    </footer>
+    </main>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Feather Icons ---
+            feather.replace();
+
+            // --- Swiper.js Initialization ---
+            const swiper = new Swiper('.mySwiper', {
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                allowTouchMove: true, 
+                speed: 400,
+                observer: true,
+                observeParents: true,
+                on: {
+                    slideChangeTransitionEnd: function () {
+                        updateActiveNav(this.activeIndex);
+                    }
+                }
+            });
+
+            // --- Page Navigation and Visibility Control ---
+            const navSpheres = document.querySelectorAll('.nav-sphere');
+            
+            function updateActiveNav(activeIndex) {
+                navSpheres.forEach((sphere, index) => {
+                    sphere.classList.toggle('active', index === activeIndex);
+                });
+            }
+
+            navSpheres.forEach(sphere => {
+                sphere.addEventListener('click', () => {
+                    const slideIndex = parseInt(sphere.dataset.slide, 10);
+                    swiper.slideTo(slideIndex);
+                });
+            });
+
+            // --- Typed.js Animation ---
+            try {
+                const typedElement = document.getElementById('typed-text');
+                if (typedElement) {
+                    new Typed('#typed-text', {
+                        strings: ['Researcher', 'Problem Solver', 'Professor', 'Team Trainer'],
+                        typeSpeed: 50,
+                        backSpeed: 50,
+                        loop: true
+                    });
+                }
+            } catch (e) {
+                console.error("Typed.js initialization failed:", e);
+                const fallbackElement = document.getElementById('typed-text');
+                if(fallbackElement) fallbackElement.textContent = 'Researcher'; // Fallback
+            }
+
+
+            // --- Image and Resume Upload ---
+            const imageInput = document.getElementById('image-input');
+            const profilePicture = document.getElementById('profile-picture');
+            const resumeViewer = document.getElementById('resume-viewer');
+
+            imageInput.addEventListener('change', (event) => {
+                if (event.target.files && event.target.files[0]) {
+                    const file = event.target.files[0];
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        if (file.type.startsWith('image/')) {
+                             profilePicture.src = e.target.result;
+                        } else if (file.type === 'application/pdf') {
+                            resumeViewer.src = e.target.result;
+                            swiper.slideTo(6); // Switch to resume slide
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // --- Set Initial Resume PDF ---
+            // You must replace this with a direct link to your PDF hosted online (e.g., on GitHub)
+            // Example: 'https://your-username.github.io/your-repo/resume.pdf'
+            const resumeUrl = ''; // Add your hosted PDF link here
+            if (resumeUrl) {
+                resumeViewer.src = resumeUrl;
+            } else {
+                 // If no URL, you can leave it blank or show a message
+                 resumeViewer.srcdoc = `<div style="color: white; text-align: center; padding-top: 20%;">Please upload a resume or set the URL in the code.</div>`;
+            }
+        });
+    </script>
 </body>
 </html>

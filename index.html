@@ -54,15 +54,6 @@
         }
         .nav-sphere:hover .nav-tooltip { visibility: visible; opacity: 1; }
         
-        /* Image upload style */
-        .image-upload-wrapper { position: relative; width: 180px; height: 180px; }
-        .image-upload-icon {
-            position: absolute; bottom: 5px; right: 5px; background-color: #22d3ee;
-            color: #111827; border-radius: 50%; padding: 8px; cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .image-upload-icon:hover { transform: scale(1.2); }
-
         /* Swiper and Card Styles */
         .swiper { width: 100%; height: 100%; }
         .swiper-slide {
@@ -125,7 +116,6 @@
         <div class="nav-sphere" data-slide="3"><i data-feather="book" class="text-gray-300"></i><span class="nav-tooltip">Education</span></div>
         <div class="nav-sphere" data-slide="4"><i data-feather="book-open" class="text-gray-300"></i><span class="nav-tooltip">Research</span></div>
         <div class="nav-sphere" data-slide="5"><i data-feather="award" class="text-gray-300"></i><span class="nav-tooltip">Accomplishments</span></div>
-        <div class="nav-sphere" data-slide="6"><i data-feather="file-text" class="text-gray-300"></i><span class="nav-tooltip">Resume</span></div>
     </aside>
 
     <!-- Main Content -->
@@ -138,10 +128,8 @@
                 <div class="swiper-slide">
                     <div class="slide-content-wrapper flex items-center justify-center">
                         <div class="flex flex-col md:flex-row items-center justify-center gap-12 text-center md:text-left">
-                            <div class="image-upload-wrapper">
-                                <img id="profile-picture" src="https://placehold.co/180x180/1F2937/E5E7EB?text=DW" alt="Profile Picture" class="rounded-full border-4 border-cyan-500">
-                                <div class="image-upload-icon" onclick="document.getElementById('image-input').click()"><i data-feather="camera"></i></div>
-                                <input type="file" id="image-input" class="hidden" accept="image/*,application/pdf">
+                            <div class="w-48 h-48">
+                                <img id="profile-picture" src="https://i.imgur.com/p4n4IW1.jpg" alt="Profile Picture" class="rounded-full border-4 border-cyan-500 w-full h-full object-cover">
                             </div>
                             <div>
                                 <h3 class="text-2xl font-light">Hello, I'm</h3>
@@ -270,18 +258,6 @@
                     </div>
                 </div>
 
-                <!-- Slide 7: Resume Viewer -->
-                <div class="swiper-slide">
-                    <div class="slide-content-wrapper">
-                        <div class="w-full h-full max-w-5xl mx-auto flex flex-col">
-                             <h2 class="text-4xl font-bold mb-4 text-center">My <span class="text-cyan">Resume</span></h2>
-                             <div class="flex-grow">
-                                <iframe id="resume-viewer" class="w-full h-full rounded-lg" src=""></iframe>
-                             </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </main>
@@ -339,39 +315,6 @@
                 console.error("Typed.js initialization failed:", e);
                 const fallbackElement = document.getElementById('typed-text');
                 if(fallbackElement) fallbackElement.textContent = 'Researcher'; // Fallback
-            }
-
-
-            // --- Image and Resume Upload ---
-            const imageInput = document.getElementById('image-input');
-            const profilePicture = document.getElementById('profile-picture');
-            const resumeViewer = document.getElementById('resume-viewer');
-
-            imageInput.addEventListener('change', (event) => {
-                if (event.target.files && event.target.files[0]) {
-                    const file = event.target.files[0];
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        if (file.type.startsWith('image/')) {
-                             profilePicture.src = e.target.result;
-                        } else if (file.type === 'application/pdf') {
-                            resumeViewer.src = e.target.result;
-                            swiper.slideTo(6); // Switch to resume slide
-                        }
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-            
-            // --- Set Initial Resume PDF ---
-            // You must replace this with a direct link to your PDF hosted online (e.g., on GitHub)
-            // Example: 'https://your-username.github.io/your-repo/resume.pdf'
-            const resumeUrl = ''; // Add your hosted PDF link here
-            if (resumeUrl) {
-                resumeViewer.src = resumeUrl;
-            } else {
-                 // If no URL, you can leave it blank or show a message
-                 resumeViewer.srcdoc = `<div style="color: white; text-align: center; padding-top: 20%;">Please upload a resume or set the URL in the code.</div>`;
             }
         });
     </script>
